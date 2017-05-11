@@ -346,12 +346,13 @@ int main() {
     start = clock();
     all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, CHEN,&count_chen,&count_vahedi);
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
-    fprintf(fChen, "%d %d %d %d %lf\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp);
+    fprintf(fChen, "%d %d %d %d %lf %d\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp,count_chen);
     start = clock();
     all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, VAHEDI,&count_chen,&count_vahedi);
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
-    fprintf(fVahedi, "%d %d %d %d %lf\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp);
+    fprintf(fVahedi, "%d %d %d %d %lf %d\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp,count_vahedi);
     printf("Tags: %4d, All: %5d, Empty: %5d, Collision: %5d\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second);
+    count_vahedi=count_chen=0;
 
   }
   fclose(fLower);

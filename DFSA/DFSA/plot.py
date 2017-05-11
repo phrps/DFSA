@@ -85,8 +85,21 @@ def plot_time(lower,eomLee,fastQ=[],adapQ=[],chen=[],vahedi=[],log=False):
 	add_points(ax,vahedi[0],vahedi[4],'c','o','Vahedi')
 	fig.savefig('images/' + name)
 
+def plot_countIter(chen=[],vahedi=[],log=False):
+	name = 'Numero de iteracoes'
+	ax,fig=set_window(5,name)
+	ax.set_ylabel('Numero de iteracoes')
+	if log:
+		name = 'Numero de iteracoes'
+		ax.set_yscale('log')
+	eixo = [chen[0][0],chen[0][-1],0,max(chen[5])]
+	plt.axis(eixo)
+	add_points(ax,chen[0],chen[5],'k','o','Chen')
+	add_points(ax,vahedi[0],vahedi[5],'c','o','Vahedi')
+	fig.savefig('images/' + name)
+
 # Read from file name and return a tuple with a set of each one
-def get_points(name):
+def get_points(name,hasCount=False):
 	arq = open(name,'r')
 	points=[]
 	points = arq.read().split()
@@ -95,6 +108,7 @@ def get_points(name):
 	emptys=[]
 	collisions=[]
 	times=[]
+	countIter=[]
 	i=0
 	while i < len(points):
 		tags.append(int(points[i]))
@@ -102,9 +116,13 @@ def get_points(name):
 		emptys.append(int(points[i+2]))
 		collisions.append(int(points[i+3]))
 		times.append(float(points[i+4]))
-		i=i+5
+		if hasCount:
+			countIter.append(int(points[i+5]))
+			i=i+6
+		else:
+			i=i+5
 	# arq.close()
-	return (tags,alls,emptys,collisions,times)
+	return (tags,alls,emptys,collisions,times,countIter)
 
 os.system('rm -rf *.png')
 os.system('mkdir -p images')
@@ -112,11 +130,12 @@ lowerBound = get_points('lower.out')
 eomLee = get_points('lee.out')
 fastQ = get_points('fast_q.out')
 adapQ = get_points('adap_q.out')
-chen = get_points('chen.out')
-vahedi = get_points('vahedi.out')
+chen = get_points('chen.out',True)
+vahedi = get_points('vahedi.out',True)
 plot_num_slots(lowerBound,eomLee,fastQ,adapQ,chen,vahedi)
 plot_num_collisions(lowerBound,eomLee,fastQ,adapQ,chen,vahedi)
 plot_num_empty(lowerBound,eomLee,fastQ,adapQ,chen,vahedi)
 plot_time(lowerBound,eomLee,fastQ,adapQ,chen,vahedi)
 plot_time(lowerBound,eomLee,fastQ,adapQ,chen,vahedi,True)
+plot_countIter(chen,vahedi)
 # plt.show()
