@@ -129,6 +129,7 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
           double next = 0, previous = -1;
 
           while(previous < next){
+            ++(*count_chen);
             double pe = pow(1 - (((double)1)/L), n);
             double ps = (((double)n)/L) * pow(1 - (((double)1)/L), n - 1);
             double pc = 1 - pe - ps;
@@ -159,7 +160,7 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
             next *= pow(pc, C);
             n++;
           }
-          ++(*count_chen);
+
 
           long long nchen = n - 2;
           nxt_frame = (int)nchen;
@@ -172,6 +173,7 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
         double remain_1 = min(S, n - S);
 
         while(previous < next){
+          ++(*count_vahedi);
           double p1 = pow((1 - (double)E/L), n);
           double p2 = 1;
 
@@ -224,7 +226,6 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
               double res4 = (pow(C - k - v, n - S - k) / pow(C, n - S));
 
               p3 += 1 + pow(-1, k + v) * res1 * res2 * res3 * res4;
-              ++(*count_vahedi);
             }
           }
 
@@ -266,6 +267,7 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
 
   int avrg_all = all_empty_col.first / num_rep;
   int avrg_empty = all_empty_col.second.first / num_rep;
+  (*count_chen) /= num_rep;
   int avrg_col = all_empty_col.second.second / num_rep;
   all_empty_col = make_pair(avrg_all, make_pair(avrg_empty, avrg_col));
 
@@ -326,19 +328,19 @@ int main() {
   int count_vahedi=0,count_chen=0;
   for (; ini_tags <= max_tags; ini_tags += inc_step) {
     start = clock();
-    all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 0, LOWER_BOUND,NULL,NULL);
+    // all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 0, LOWER_BOUND,NULL,NULL);
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
     fprintf(fLower, "%d %d %d %d %lf\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp);
     start = clock();
-    all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 0, EON_LEE,NULL,NULL);
+    // all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 0, EON_LEE,NULL,NULL);
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
     fprintf(fLee, "%d %d %d %d %lf\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp);
     start = clock();
-    all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, FAST_Q,NULL,NULL);
+    // all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, FAST_Q,NULL,NULL);
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
     fprintf(fFastQ, "%d %d %d %d %lf\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp);
     start = clock();
-    all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, ADAP_Q,NULL,NULL);
+    // all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, ADAP_Q,NULL,NULL);
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
     fprintf(fAdapQ, "%d %d %d %d %lf\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp);
     start = clock();
@@ -346,7 +348,7 @@ int main() {
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
     fprintf(fChen, "%d %d %d %d %lf %d\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp,count_chen);
     start = clock();
-    all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, VAHEDI,&count_chen,&count_vahedi);
+    // all_empty_col = Simulate(ini_tags, ini_frame, num_rep, 4, VAHEDI,&count_chen,&count_vahedi);
     temp = ((double)(clock()-start) / CLOCKS_PER_SEC)*1000;
     fprintf(fVahedi, "%d %d %d %d %lf %d\n", ini_tags, all_empty_col.first, all_empty_col.second.first, all_empty_col.second.second, temp,count_vahedi);
     count_vahedi=count_chen=0;

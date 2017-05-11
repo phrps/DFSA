@@ -69,11 +69,11 @@ def plot_num_empty(lower,eomLee,fastQ=[],adapQ=[],chen=[],vahedi=[]):
 	fig.savefig('images/' + name)
 
 def plot_time(lower,eomLee,fastQ=[],adapQ=[],chen=[],vahedi=[],log=False):
-	name = 'Tempo para identificacao'
+	name = 'Tempo de execucao'
 	ax,fig=set_window(4,name)
-	ax.set_ylabel('Tempo de identificacao (ms)')
+	ax.set_ylabel('Tempo de execucao (ms)')
 	if log:
-		name = 'Tempo para identificacao (escala logaritmica)'
+		name = 'Tempo de execucao (escala logaritmica)'
 		ax.set_yscale('log')
 	eixo = [lower[0][0],lower[0][-1],0,4000]
 	plt.axis(eixo)
@@ -94,7 +94,7 @@ def plot_countIter(chen=[],vahedi=[],log=False):
 		ax.set_yscale('log')
 	menor=min(min(chen[5]),min(vahedi[5]))
 	maior=max(max(chen[5]),max(vahedi[5]))
-	eixo = [chen[0][0],chen[0][-1],menor,maior]
+	eixo = [chen[0][0],chen[0][-1],0,max(chen[5])]
 	plt.axis(eixo)
 	add_points(ax,chen[0],chen[5],'k','o','Chen')
 	add_points(ax,vahedi[0],vahedi[5],'c','o','Vahedi')
