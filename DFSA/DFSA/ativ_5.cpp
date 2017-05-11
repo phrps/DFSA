@@ -170,13 +170,13 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
         long long L = (long long)nxt_frame;
         long long n = (long long)S + 2 * (long long)C;
         double next = 0, previous = -1;
-        double remain_1 = min(n, n - S);
+        double remain_1 = min(S, n - S);
 
         while(previous < next){
           double p1 = pow((1 - (double)E/L), n);
           double p2 = 1;
 
-          for(long long i = max(S, n - S) + 1; i <= L; ++i){
+          for(long long i = max(S, n - S) + 1; i <= n; ++i){
             p2 *= (double)i / remain_1;
             remain_1--;
           }
