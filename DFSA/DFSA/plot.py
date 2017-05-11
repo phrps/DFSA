@@ -92,7 +92,9 @@ def plot_countIter(chen=[],vahedi=[],log=False):
 	if log:
 		name = 'Numero de iteracoes'
 		ax.set_yscale('log')
-	eixo = [chen[0][0],chen[0][-1],0,max(chen[5])]
+	menor=min(min(chen[5]),min(vahedi[5]))
+	maior=max(max(chen[5]),max(vahedi[5]))
+	eixo = [chen[0][0],chen[0][-1],menor,maior]
 	plt.axis(eixo)
 	add_points(ax,chen[0],chen[5],'k','o','Chen')
 	add_points(ax,vahedi[0],vahedi[5],'c','o','Vahedi')

@@ -163,7 +163,7 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
           ++(*count_chen);
 
           long long nchen = n - 2;
-          nxt_frame = (int)nchen - S;
+          nxt_frame = (int)nchen;
       } else if(op_protocol == VAHEDI){
         long long C = (long long)collided, S = (long long)cur_identified;
         long long E = (long long)nxt_frame - (long long)C - (long long)S;
@@ -258,7 +258,7 @@ pair<int, pair<int, int> > Simulate(int ini_tags, int ini_frame, int num_rep, in
         }
 
         ll nvahedi = n - 2;
-        nxt_frame = (int)nvahedi - S;
+        nxt_frame = (int)nvahedi;
       }
 
       if (nxt_frame <= 0)
